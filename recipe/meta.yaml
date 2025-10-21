@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/lsst-efd-client-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/lsst-efd-client-{{ version }}.tar.gz
   sha256: e304340eae2ca5fc390646278f2bb31679e799cabf0a3d2d0e778a8cdc36b141
 
 build:
@@ -16,26 +16,27 @@ build:
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip ==19.2.3
     - bump2version ==0.5.11
     - wheel ==0.33.6
     - watchdog ==0.9.0
     - flake8 ==3.7.8
     - coverage ==4.5.4
+    - setuptools
     - twine
     - pytest-runner
   run:
-    - python >=3.5
+    - python >={{ python_min }}
     - numpy >=1.16.5
     - aioinflux
     - pandas
-    - astropy
+    - astropy-base
     - pyyaml
     - pytables
     - kafkit
     - requests
-    - legacy-cgi   # [py>=312]
+    - legacy-cgi
 
 test:
   imports:
@@ -44,6 +45,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/lsst-sqre/lsst-efd-client
